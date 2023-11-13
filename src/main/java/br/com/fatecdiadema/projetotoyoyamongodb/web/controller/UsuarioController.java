@@ -19,6 +19,7 @@ import java.util.Optional;
 @RequestMapping("/")
 public class UsuarioController {
 
+    /* usuarioRepository é a instanciação da classe UsuarioRepository */
     @Autowired
     private UsuarioRepository usuarioRepository;
 
@@ -51,6 +52,25 @@ public class UsuarioController {
         Optional<UsuarioModel> postoOptional = usuarioRepository.findById(id);
         if(postoOptional.isPresent()) {
             return new ResponseEntity<>(postoOptional.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Nenhum posto encontrado com id" +id, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("postos/{id}")
+    public ResponseEntity<?> updateById(@PathVariable("id") String id, @RequestBody UsuarioModel posto) {
+        Optional<UsuarioModel> postoOptional = usuarioRepository.findById(id);
+        if(postoOptional.isPresent()) {
+            UsuarioModel postoToSave = postoOptional.get();
+            /* Código que não tenho muita certeza o que faz mas dá certo */
+            /* postoToSave() é o método para salvar dados */
+            postoToSave.setUsername(posto.getUsername() != null ? posto.getUsername() : postoToSave.getUsername());
+            postoToSave.setPassword(posto.getPassword() != null ? posto.getPassword() : postoToSave.getPassword());
+            postoToSave.setEmail(posto.getEmail() != null ? posto.getEmail() : postoToSave.getEmail());
+            postoToSave.setRole(posto.getRole() != null ? posto.getRole() : postoToSave.getRole());
+            postoToSave.setDataModificacao(new Date(System.currentTimeMillis()));
+            usuarioRepository.save(postoToSave);
+            return new ResponseEntity<>(postoToSave, HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Nenhum posto encontrado com id" +id, HttpStatus.NOT_FOUND);
         }
