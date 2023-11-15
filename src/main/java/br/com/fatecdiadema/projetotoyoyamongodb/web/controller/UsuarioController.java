@@ -75,4 +75,14 @@ public class UsuarioController {
             return new ResponseEntity<>("Nenhum posto encontrado com id" +id, HttpStatus.NOT_FOUND);
         }
     }
+
+    @DeleteMapping("postos/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable("id") String id) {
+        try {
+            usuarioRepository.deleteById(id);
+            return new ResponseEntity<>("Posto deletado com o id "+id, HttpStatus.OK);
+        } catch(Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
 }
