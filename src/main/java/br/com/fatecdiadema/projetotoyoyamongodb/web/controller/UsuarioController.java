@@ -3,10 +3,8 @@ package br.com.fatecdiadema.projetotoyoyamongodb.web.controller;
 import br.com.fatecdiadema.projetotoyoyamongodb.model.UsuarioModel;
 import br.com.fatecdiadema.projetotoyoyamongodb.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,71 +14,66 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/")
+@RequestMapping
 public class UsuarioController {
 
     /* usuarioRepository é a instanciação da classe UsuarioRepository */
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    /* Busca e retorna postos armazenados no MongoDB para o usuário- Requisição GET */
-    @GetMapping("/postos")
+    @GetMapping("/usuarios")
     public ResponseEntity<?> getAllPostos() {
-        List<UsuarioModel> postos = usuarioRepository.findAll();
-        if (postos.size() > 0) {
-            return new ResponseEntity<List<UsuarioModel>>(postos, HttpStatus.OK);
+        List<UsuarioModel> usuarios = usuarioRepository.findAll();
+        if (usuarios.size() > 0) {
+            return new ResponseEntity <List<UsuarioModel>>(usuarios, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Nenhum posto encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Nenhum usuário encontrado", HttpStatus.NOT_FOUND);
         }
     }
 
-    /* Armazena postos inseridos pelo usuário para dentro do MongoDB */
-    @PostMapping("/postos")
-    public ResponseEntity<?> createPosto(@RequestBody UsuarioModel posto) {
+    @PostMapping("/usuarios")
+    public ResponseEntity<?> createUsuario(@RequestBody UsuarioModel usuario) {
         try {
-            posto.setDataCriacao(new Date(System.currentTimeMillis()));
-            usuarioRepository.save(posto);
-            return new ResponseEntity<UsuarioModel>(posto, HttpStatus.OK);
+            usuario.setDataCriacao(new Date(System.currentTimeMillis()));
+            usuarioRepository.save(usuario);
+            return new ResponseEntity<UsuarioModel>(usuario, HttpStatus.OK);
         } catch(Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-
-    @GetMapping("postos/{id}")
-    public ResponseEntity<?> getSinglePosto(@PathVariable("id") String id) {
-        Optional<UsuarioModel> postoOptional = usuarioRepository.findById(id);
-        if(postoOptional.isPresent()) {
-            return new ResponseEntity<>(postoOptional.get(), HttpStatus.OK);
+    @GetMapping("/usuarios/{id}")
+    public ResponseEntity<?> getSingleUsuario(@PathVariable("id") String id) {
+        Optional<UsuarioModel> usuarioOptional = usuarioRepository.findById(id);
+        if(usuarioOptional.isPresent()) {
+            return new ResponseEntity<>(usuarioOptional.get(), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Nenhum posto encontrado com id" +id, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Nenhum usuário encontrado com id" +id, HttpStatus.NOT_FOUND);
         }
     }
 
-    @PutMapping("postos/{id}")
-    public ResponseEntity<?> updateById(@PathVariable("id") String id, @RequestBody UsuarioModel posto) {
-        Optional<UsuarioModel> postoOptional = usuarioRepository.findById(id);
-        if(postoOptional.isPresent()) {
-            UsuarioModel postoToSave = postoOptional.get();
-            /* Código que não tenho muita certeza o que faz mas dá certo */
-            /* postoToSave() é o método para salvar dados */
-            postoToSave.setUsername(posto.getUsername() != null ? posto.getUsername() : postoToSave.getUsername());
-            postoToSave.setPassword(posto.getPassword() != null ? posto.getPassword() : postoToSave.getPassword());
-            postoToSave.setEmail(posto.getEmail() != null ? posto.getEmail() : postoToSave.getEmail());
-            postoToSave.setRole(posto.getRole() != null ? posto.getRole() : postoToSave.getRole());
-            postoToSave.setDataModificacao(new Date(System.currentTimeMillis()));
-            usuarioRepository.save(postoToSave);
-            return new ResponseEntity<>(postoToSave, HttpStatus.OK);
+    @PutMapping("/usuarios/{id}")
+    public ResponseEntity<?> updateById(@PathVariable("id") String id, @RequestBody UsuarioModel usuario) {
+        Optional<UsuarioModel> usuarioOptional = usuarioRepository.findById(id);
+        if(usuarioOptional.isPresent()) {
+            UsuarioModel usuarioToSave = usuarioOptional.get();
+            usuarioToSave.setUsername(usuario.getUsername());
+            usuarioToSave.setPassword(usuario.getPassword());
+            usuarioToSave.setEmail(usuario.getEmail());
+            usuarioToSave.setRole(usuario.getRole());
+            usuarioToSave.setDataModificacao(new Date(System.currentTimeMillis()));
+            usuarioRepository.save(usuarioToSave);
+            return new ResponseEntity<>(usuarioToSave, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Nenhum posto encontrado com id" +id, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Nenhum usuário encontrado com id" +id, HttpStatus.NOT_FOUND);
         }
     }
 
-    @DeleteMapping("postos/{id}")
+    @DeleteMapping("/usuarios/{id}")
     public ResponseEntity<?> deleteById(@PathVariable("id") String id) {
         try {
             usuarioRepository.deleteById(id);
-            return new ResponseEntity<>("Posto deletado com o id "+id, HttpStatus.OK);
+            return new ResponseEntity<>("Usuário deletado com sucesso", HttpStatus.OK);
         } catch(Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }

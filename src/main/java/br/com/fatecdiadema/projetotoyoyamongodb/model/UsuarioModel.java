@@ -1,40 +1,45 @@
 package br.com.fatecdiadema.projetotoyoyamongodb.model;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Date;
 import java.util.Objects;
-
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection="usuarios")
-/*depois mudar o nome teste para o nome da coleção que pretende usar */
 public class UsuarioModel {
 
     @Id
     private String id;
 
+    @Field(name = "nome")
     private String username;
 
+    @Field(name = "senha")
     private String password;
 
+    @Field(name = "email")
     private String email;
 
+    @Field(name = "role")
     private Role role;
 
+    @Field(name = "dataCriacao")
     private Date dataCriacao;
 
+    @Field(name = "dataModificacao")
     private Date dataModificacao;
 
-    /* Insira aqui os cargos de usuários que o sistema terá*/
     public enum Role {
         ROLE_ADMIN, ROLE_CLIENTE
     }
