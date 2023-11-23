@@ -33,9 +33,15 @@ public class PostoModel {
     @Field(name = "email")
     private String email;
 
+    @Field(name = "senha")
+    private String senha;
+
     @CNPJ
     @Field(name = "cnpj")
     private String cnpj;
+
+    @Field(name = "horaFuncionamento")
+    private String horaFuncionamento;
 
     @Field(name = "dataCriacao")
     private Date dataCriacao;
