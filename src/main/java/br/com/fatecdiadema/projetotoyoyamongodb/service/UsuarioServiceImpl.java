@@ -79,6 +79,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         {
             throw new UsuarioCollectionException(UsuarioCollectionException.NotFoundException(id));
         }
+    }
 
         public void deleteUsuarioById(String id) throws UsuarioCollectionException {
             Optional<UsuarioModel> usuarioOptional = usuarioRepository.findById(id);
@@ -92,4 +93,3 @@ public class UsuarioServiceImpl implements UsuarioService {
             }
         }
     }
-}

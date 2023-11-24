@@ -12,7 +12,7 @@ public interface UsuarioService {
 
     public UsuarioModel getSingleUsuario(String id) throws UsuarioCollectionException;
 
-    public void createUsuario(UsuarioModel usuario) throws ConstraintViolationException, UsuarioCollectionException;
+    public void createUsuario(UsuarioModel usuario) throws UsuarioCollectionException;
 
     public void updateUsuario(String id, UsuarioModel usuario) throws UsuarioCollectionException;
 

@@ -12,7 +12,7 @@ public interface PostoService {
 
     public PostoModel getSinglePosto(String id) throws PostoCollectionException;
 
-    public void createPosto(String nome, String endereco, String cnpj, String horarioFuncionamento, String telefone, String email, String senha) throws ConstraintViolationException, PostoCollectionException;
+    public void createPosto(PostoModel posto) throws PostoCollectionException;
 
     public void updatePosto(String id, PostoModel posto) throws PostoCollectionException;
 

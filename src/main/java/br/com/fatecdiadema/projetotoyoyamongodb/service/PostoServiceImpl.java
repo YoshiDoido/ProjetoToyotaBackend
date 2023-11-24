@@ -54,8 +54,10 @@ public class PostoServiceImpl implements PostoService {
     public void updatePosto(String id, PostoModel posto) throws PostoCollectionException {
         Optional<PostoModel> postoWithId = postoRepository.findById(id);
         Optional<PostoModel> postoWithSameEmail = postoRepository.findByEmail(posto.getEmail());
-        if (postoWithId.isPresent()) {
-            if (postoWithSameEmail.isPresent() && !postoWithSameEmail.get().getId().equals(id)) {
+        if (postoWithId.isPresent())
+        {
+            if (postoWithSameEmail.isPresent() && !postoWithSameEmail.get().getId().equals(id))
+            {
                 throw new PostoCollectionException(PostoCollectionException.EmailAlreadyExists());
             }
             PostoModel postoToUpdate = postoWithId.get();
@@ -68,16 +70,21 @@ public class PostoServiceImpl implements PostoService {
             postoToUpdate.setCnpj(posto.getCnpj());
             postoToUpdate.setDataModificacao(new Date(System.currentTimeMillis()));
             postoRepository.save(postoToUpdate);
-        } else {
+        }
+        else
+        {
             throw new PostoCollectionException(PostoCollectionException.NotFoundException(id));
         }
     }
 
     public void deletePostoById(String id) throws PostoCollectionException {
         Optional<PostoModel> postoOptional = postoRepository.findById(id);
-        if (!postoOptional.isPresent()) {
+        if (!postoOptional.isPresent())
+        {
             throw new PostoCollectionException(PostoCollectionException.NotFoundException(id));
-        } else {
+        }
+        else
+        {
             postoRepository.deleteById(id);
         }
     }
