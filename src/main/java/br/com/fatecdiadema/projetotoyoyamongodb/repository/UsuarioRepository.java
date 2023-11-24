@@ -16,6 +16,9 @@ public interface UsuarioRepository extends MongoRepository<UsuarioModel, String>
     @Query("{'email': ?0}")
     Optional<UsuarioModel> findByEmail(String email);
 
+    @Query("{'_id': ?0}")
+    Optional<UsuarioModel> findById(String id);
+
     @Query("{'nome': ?0, 'senha': ?1}")
     Optional<UsuarioModel> findByNomeAndSenha(String nome, String senha);
 }

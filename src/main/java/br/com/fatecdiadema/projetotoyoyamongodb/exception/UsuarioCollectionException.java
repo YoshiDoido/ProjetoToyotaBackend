@@ -15,11 +15,7 @@ public class UsuarioCollectionException extends Exception {
         return "Usuario com id " + id + " não encontrado";
     }
 
-    public static String NomeAlreadyExists() {
-        return "Nome de usuário já existe";
-    }
-
     public static String EmailAlreadyExists() {
-        return "Email já existe";
+        return "Usuario com o Email já existe";
     }
 }

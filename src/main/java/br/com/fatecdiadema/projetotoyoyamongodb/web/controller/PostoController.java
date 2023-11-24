@@ -1,8 +1,11 @@
 package br.com.fatecdiadema.projetotoyoyamongodb.web.controller;
 
+import br.com.fatecdiadema.projetotoyoyamongodb.exception.PostoCollectionException;
 import br.com.fatecdiadema.projetotoyoyamongodb.model.PostoModel;
 import br.com.fatecdiadema.projetotoyoyamongodb.model.UsuarioModel;
 import br.com.fatecdiadema.projetotoyoyamongodb.repository.PostoRepository;
+import br.com.fatecdiadema.projetotoyoyamongodb.service.PostoService;
+import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +25,9 @@ public class PostoController {
     @Autowired
     private PostoRepository postoRepository;
 
+    @Autowired
+    private PostoService postoService;
+
     /* Busca e retorna postos armazenados no MongoDB para o usuário- Requisição GET */
     @GetMapping("/postos") /* Originalmente @GetMapping("/postos") */
     public ResponseEntity<?> getAllPostos() {
@@ -37,11 +43,12 @@ public class PostoController {
     @PostMapping("/postos") /* Originalmente @PostMapping("/postos") */
     public ResponseEntity<?> createPosto(@RequestBody PostoModel posto) {
         try {
-            posto.setDataCriacao(new Date(System.currentTimeMillis()));
-            postoRepository.save(posto);
+            postoService.createPosto(posto);
             return new ResponseEntity<PostoModel>(posto, HttpStatus.OK);
-        } catch(Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch(ConstraintViolationException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+        } catch(PostoCollectionException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
 

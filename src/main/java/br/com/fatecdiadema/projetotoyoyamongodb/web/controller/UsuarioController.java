@@ -1,7 +1,10 @@
 package br.com.fatecdiadema.projetotoyoyamongodb.web.controller;
 
+import br.com.fatecdiadema.projetotoyoyamongodb.exception.PostoCollectionException;
 import br.com.fatecdiadema.projetotoyoyamongodb.model.UsuarioModel;
 import br.com.fatecdiadema.projetotoyoyamongodb.repository.UsuarioRepository;
+import br.com.fatecdiadema.projetotoyoyamongodb.service.UsuarioService;
+import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,14 +15,24 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
+
 @RestController
-@RequestMapping
 public class UsuarioController {
 
-    /* usuarioRepository é a instanciação da classe UsuarioRepository */
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UsuarioService usuarioService;
+
+    @PostMapping("/usuarios")
+    public ResponseEntity<?> createUsuario(@RequestBody UsuarioModel usuario) {
+        try {
+            usuarioService.createUsuario(usuario);
+            return new ResponseEntity<UsuarioModel>(usuario, HttpStatus.OK);
+        } catch(ConstraintViolationException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+        } catch(PostoCollectionException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+    }
 
     @GetMapping("/usuarios")
     public ResponseEntity<?> getAllPostos() {
@@ -28,17 +41,6 @@ public class UsuarioController {
             return new ResponseEntity <List<UsuarioModel>>(usuarios, HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Nenhum usuário encontrado", HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @PostMapping("/usuarios")
-    public ResponseEntity<?> createUsuario(@RequestBody UsuarioModel usuario) {
-        try {
-            usuario.setDataCriacao(new Date(System.currentTimeMillis()));
-            usuarioRepository.save(usuario);
-            return new ResponseEntity<UsuarioModel>(usuario, HttpStatus.OK);
-        } catch(Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
