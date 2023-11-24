@@ -51,6 +51,14 @@ public class PostoModel {
     @Field(name = "horaFuncionamento")
     private String horarioFuncionamento;
 
+    @NotNull(message = "Latitude não pode ser nulo")
+    @Field(name = "latitude")
+    private String latitude;
+
+    @NotNull(message = "Longitude não pode ser nulo")
+    @Field(name = "longitude")
+    private String longitude;
+
     @Field(name = "dataCriacao")
     private Date dataCriacao;
 

@@ -14,5 +14,8 @@ public interface PostoRepository extends MongoRepository<PostoModel, String> {
     Optional<PostoModel> findByEmail(String email);
 
     @Query("{'_id': ?0}")
-    Optional<PostoModel> findById(String s);
+    Optional<PostoModel> findById(String id);
+
+    @Query("{'latitude': ?0, 'longitude': ?1}")
+    Optional<PostoModel> findByLatitudeAndLongitude(String latitude, String longitude);
 }
