@@ -68,9 +68,9 @@ public class UsuarioServiceImpl implements UsuarioService {
             }
             UsuarioModel usuarioToUpdate = usuarioWithId.get();
 
-            usuarioToUpdate.setUsername(usuario.getUsername());
+            usuarioToUpdate.setNome(usuario.getNome());
             usuarioToUpdate.setEmail(usuario.getEmail());
-            usuarioToUpdate.setPassword(usuario.getPassword());
+            usuarioToUpdate.setSenha(usuario.getSenha());
             usuarioToUpdate.setRole(usuario.getRole());
             usuarioToUpdate.setDataModificacao(new Date(System.currentTimeMillis()));
             usuarioRepository.save(usuarioToUpdate);

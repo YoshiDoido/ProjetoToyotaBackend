@@ -23,10 +23,10 @@ public class UsuarioModel {
     private String id;
 
     @Field(name = "username")
-    private String username;
+    private String nome;
 
     @Field(name = "password")
-    private String password;
+    private String senha;
 
     @Field(name = "email")
     private String email;
