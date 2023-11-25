@@ -1,5 +1,6 @@
 package br.com.fatecdiadema.projetotoyoyamongodb.model;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,6 +37,7 @@ public class PostoModel {
 
     @NotNull(message = "Email não pode ser nulo")
     @Field(name = "email")
+    @Email(message = "Email inválido")
     private String email;
 
     /*
@@ -60,11 +62,11 @@ public class PostoModel {
 
     @NotNull(message = "Latitude não pode ser nulo")
     @Field(name = "latitude")
-    private String latitude;
+    private double latitude;
 
     @NotNull(message = "Longitude não pode ser nulo")
     @Field(name = "longitude")
-    private String longitude;
+    private double longitude;
 
     @Field(name = "dataCriacao")
     private Date dataCriacao;

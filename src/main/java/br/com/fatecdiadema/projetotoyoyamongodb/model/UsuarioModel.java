@@ -1,5 +1,6 @@
 package br.com.fatecdiadema.projetotoyoyamongodb.model;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,6 +30,7 @@ public class UsuarioModel {
     private String senha;
 
     @Field(name = "email")
+    @Email(message = "Email inválido")
     private String email;
 
     @Field(name = "role")
