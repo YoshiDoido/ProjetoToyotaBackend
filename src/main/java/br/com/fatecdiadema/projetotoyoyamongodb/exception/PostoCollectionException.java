@@ -23,7 +23,11 @@ public class PostoCollectionException extends Exception {
         return "Email já existe";
     }
 
+    /*
+    // Não vai precisar procurar por CNPJ
     public static String CNPJAlreadyExists() {
         return "CNPJ já existe";
     }
+
+     */
 }

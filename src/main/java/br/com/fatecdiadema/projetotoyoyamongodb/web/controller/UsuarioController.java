@@ -33,6 +33,12 @@ public class UsuarioController {
         }
     }
 
+    @GetMapping("/usuarios")
+    public ResponseEntity<?> getAllUsuarios() {
+        List<UsuarioModel> usuarios = usuarioService.getAllUsuarios();
+        return new ResponseEntity<>(usuarios, usuarios.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+    }
+
     @GetMapping("/usuarios/{id}")
     public ResponseEntity<?> getSingleUsuario(@PathVariable("id") String id) {
         try {

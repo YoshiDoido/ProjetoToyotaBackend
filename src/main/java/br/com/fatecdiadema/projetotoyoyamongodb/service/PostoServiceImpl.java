@@ -66,8 +66,8 @@ public class PostoServiceImpl implements PostoService {
             postoToUpdate.setEndereco(posto.getEndereco());
             postoToUpdate.setTelefone(posto.getTelefone());
             postoToUpdate.setEmail(posto.getEmail());
-            postoToUpdate.setSenha(posto.getSenha());
-            postoToUpdate.setCnpj(posto.getCnpj());
+            //postoToUpdate.setSenha(posto.getSenha());
+            //postoToUpdate.setCnpj(posto.getCnpj());
             postoToUpdate.setDataModificacao(new Date(System.currentTimeMillis()));
             postoRepository.save(postoToUpdate);
         }

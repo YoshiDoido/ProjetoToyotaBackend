@@ -38,15 +38,22 @@ public class PostoModel {
     @Field(name = "email")
     private String email;
 
+    /*
+    // Não vai precisar de senha
     @NotNull(message = "Senha não pode ser nulo")
     @Field(name = "senha")
     private String senha;
 
+     */
+
+    /*
+    // Também não vai precisar de CNPJ
     @NotNull(message = "CNPJ não pode ser nulo")
     @CNPJ
     @Field(name = "cnpj")
     private String cnpj;
 
+     */
     @NotNull(message = "Horário de funcionamento não pode ser nulo")
     @Field(name = "horaFuncionamento")
     private String horarioFuncionamento;
