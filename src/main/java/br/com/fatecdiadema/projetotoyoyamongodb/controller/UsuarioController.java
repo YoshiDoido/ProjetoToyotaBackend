@@ -1,4 +1,4 @@
-package br.com.fatecdiadema.projetotoyoyamongodb.web.controller;
+package br.com.fatecdiadema.projetotoyoyamongodb.controller;
 
 import br.com.fatecdiadema.projetotoyoyamongodb.exception.PostoCollectionException;
 import br.com.fatecdiadema.projetotoyoyamongodb.exception.UsuarioCollectionException;
